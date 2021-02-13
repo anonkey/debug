@@ -28,7 +28,6 @@ exports.colors = [6, 2, 3, 4, 5, 1];
 
 try {
 	// Optional dependency (as in, doesn't need to be installed, NOT like optionalDependencies in package.json)
-	// eslint-disable-next-line import/no-extraneous-dependencies
 	const supportsColor = require('supports-color');
 
 	if (supportsColor && (supportsColor.stderr || supportsColor).level >= 2) {
@@ -183,6 +182,7 @@ function getDate() {
 	if (exports.inspectOpts.hideDate) {
 		return '';
 	}
+
 	return new Date().toISOString() + ' ';
 }
 

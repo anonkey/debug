@@ -167,6 +167,7 @@ function formatArgs(args) {
 		if (match === '%%') {
 			return;
 		}
+
 		index++;
 		if (match === '%c') {
 			// We only are interested in the *last* %c

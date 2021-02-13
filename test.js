@@ -21,12 +21,12 @@ describe('debug', () => {
 	});
 
 	it('honors global debug namespace enable calls', () => {
-		assert.deepStrictEqual(debug('test:12345').enabled, false);
-		assert.deepStrictEqual(debug('test:67890').enabled, false);
+		assert.deepStrictEqual(debug('test:12345').enabled(), false);
+		assert.deepStrictEqual(debug('test:67890').enabled(), false);
 
 		debug.enable('test:12345');
-		assert.deepStrictEqual(debug('test:12345').enabled, true);
-		assert.deepStrictEqual(debug('test:67890').enabled, false);
+		assert.deepStrictEqual(debug('test:12345').enabled(), true);
+		assert.deepStrictEqual(debug('test:67890').enabled(), false);
 	});
 
 	it('uses custom log function', () => {
@@ -114,15 +114,15 @@ describe('debug', () => {
 			const namespaces = debug.disable();
 			assert.deepStrictEqual(namespaces, 'test,abc*,-abc');
 			debug.enable(namespaces);
-			assert.deepStrictEqual(oldNames.map(String), debug.names.map(String));
-			assert.deepStrictEqual(oldSkips.map(String), debug.skips.map(String));
+			assert.deepStrictEqual(oldNames.map(s => `${s}`), debug.names.map(s => `${s}`));
+			assert.deepStrictEqual(oldSkips.map(s => `${s}`), debug.skips.map(s => `${s}`));
 		});
 
-		it('handles re-enabling existing instances', () => {
+		it.only('handles re-enabling existing instances', () => {
 			debug.disable('*');
 			const inst = debug('foo');
 			const messages = [];
-			inst.log = msg => messages.push(msg.replace(/^[^@]*@([^@]+)@.*$/, '$1'));
+			inst.log = message => messages.push(message.replace(/^[^@]*@([^@]+)@.*$/, '$1'));
 
 			inst('@test@');
 			assert.deepStrictEqual(messages, []);
